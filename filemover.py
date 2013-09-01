@@ -26,22 +26,25 @@
 #appropriate folders in (basedir) based on regexes found in (input) file
 
 from os import listdir
+import sys
+import os
 import re
 import shutil
 
 basedir = "/home/idex/Anime/"
 tmpdir = "9TMP/"
+curdir = os.path.dirname(sys.argv[0])# + "/"
 folderlist = ""
 filelist = ""
 def listfiles():
-	dirl = "/home/idex/Anime/9TMP/"
+	dirl = basedir+tmpdir
 	files = listdir(dirl)
 	return files
 def regexfiles():
 	folderlist = ""
 	filelist = ""
 	files = listfiles()
-	inputfile = open("input").read().splitlines()
+	inputfile = open(curdir+"input").read().splitlines()
 	for i in inputfile:
 		folderlist = ""
 		filelist = ""
@@ -58,12 +61,10 @@ def regexfiles():
 				
 		if folderlist is not "" and filelist is not "":
 			movefiles(filelist, folderlist)
-			#print("File found: " + filelist + " with folder: " + folderlist)
+			
 		else: print("Folder/file pair was not found with regex %s" % i)
-	#return (filelist, folderlist)
 def findfolder():
-	dirl2 = "/home/idex/Anime/"
-	folders = listdir(dirl2)
+	folders = listdir(basedir)
 	return folders
 	
 def movefiles(filelist, folderlist):
